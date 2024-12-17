@@ -1,31 +1,20 @@
-import Papa from 'papaparse';
-
-async function convertCSVtoJSON() {
-  const fileContent = await window.fs.readFile('menudatacsv.csv', { encoding: 'utf8' });
-  
-  const result = Papa.parse(fileContent, {
-    header: true,
-    skipEmptyLines: true,
-    dynamicTyping: true
-  });
-
-  // Clean and transform the data
-  const cleanData = result.data.map(item => ({
-    name: item.Name,
-    portion: item.Portion,
-    ingredients: item.Ingredients,
-    nutritionalInfo: {
-      calories: item.Calories,
-      fats: item.Fats,
-      protein: item.Protein,
-      carbs: item.Carbs,
-      salt: item.Salt
+// data.js
+const menuData = [
+  {
+    "name": "SALATA ICRE CRAP",
+    "portion": "100GR",
+    "ingredients": "icre crap-25gr, ulei-60gr, zeama de lamaie, ceapa, apa, sare",
+    "nutritionalInfo": {
+      "calories": "565/2361",
+      "fats": "61gr/30gr",
+      "protein": 6,
+      "carbs": 0,
+      "salt": "1gr"
     },
-    allergens: item.Allergens,
-    additives: item.Additives
-  }));
+    "allergens": "peste",
+    "additives": null
+  },
+  // ... rest of your menu items
+];
 
-  console.log(JSON.stringify(cleanData, null, 2));
-}
-
-convertCSVtoJSON();
+export default menuData;
