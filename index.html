@@ -6,91 +6,152 @@
     <title>Restaurant Menu</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
     <div id="root"></div>
     <script type="module">
+        // Inline menu data
         const menuData = [
-          // The JSON data will go here - removed for brevity
+            {
+                "name": "SALATA ICRE CRAP",
+                "portion": "100GR",
+                "ingredients": "icre crap-25gr, ulei-60gr, zeama de lamaie, ceapa, apa, sare",
+                "nutritionalInfo": {
+                    "calories": "565/2361",
+                    "fats": "61gr/30gr",
+                    "protein": 6,
+                    "carbs": 0,
+                    "salt": "1gr"
+                },
+                "allergens": "peste",
+                "additives": null
+            },
+            // Copy the rest of your menu items here
         ];
 
         const MenuItem = ({ item }) => {
             const [isExpanded, setIsExpanded] = React.useState(false);
 
-            return (
-                <div className="bg-white rounded-lg shadow-md p-4 mb-4 transition-all duration-300 hover:shadow-lg">
-                    <div className="flex justify-between items-center">
-                        <div>
-                            <h3 className="text-lg font-semibold text-gray-800">{item.name}</h3>
-                            <p className="text-sm text-gray-600">Portion: {item.portion}</p>
-                        </div>
-                        <button
-                            onClick={() => setIsExpanded(!isExpanded)}
-                            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-                        >
-                            {isExpanded ? 'Less Details' : 'More Details'}
-                        </button>
-                    </div>
-                    
-                    {isExpanded && (
-                        <div className="mt-4 p-4 bg-gray-50 rounded-md">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <h4 className="font-semibold text-gray-700 mb-2">Ingredients</h4>
-                                    <p className="text-sm text-gray-600">{item.ingredients}</p>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-gray-700 mb-2">Nutritional Information</h4>
-                                    <ul className="text-sm text-gray-600">
-                                        <li>Calories: {item.nutritionalInfo.calories}</li>
-                                        <li>Fats: {item.nutritionalInfo.fats}</li>
-                                        <li>Protein: {item.nutritionalInfo.protein}g</li>
-                                        <li>Carbs: {item.nutritionalInfo.carbs || '0'}g</li>
-                                        <li>Salt: {item.nutritionalInfo.salt}</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            {(item.allergens || item.additives) && (
-                                <div className="mt-4">
-                                    {item.allergens && (
-                                        <p className="text-sm text-red-600">
-                                            <span className="font-semibold">Allergens:</span> {item.allergens}
-                                        </p>
-                                    )}
-                                    {item.additives && (
-                                        <p className="text-sm text-orange-600">
-                                            <span className="font-semibold">Additives:</span> {item.additives}
-                                        </p>
-                                    )}
-                                </div>
-                            )}
-                        </div>
-                    )}
-                </div>
-            );
+            return React.createElement('div', {
+                className: "bg-white rounded-lg shadow-md p-4 mb-4 transition-all duration-300 hover:shadow-lg"
+            }, [
+                React.createElement('div', {
+                    key: 'header',
+                    className: "flex justify-between items-center"
+                }, [
+                    React.createElement('div', { key: 'title' }, [
+                        React.createElement('h3', {
+                            key: 'name',
+                            className: "text-lg font-semibold text-gray-800"
+                        }, item.name),
+                        React.createElement('p', {
+                            key: 'portion',
+                            className: "text-sm text-gray-600"
+                        }, `Portion: ${item.portion}`)
+                    ]),
+                    React.createElement('button', {
+                        key: 'button',
+                        onClick: () => setIsExpanded(!isExpanded),
+                        className: "px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                    }, isExpanded ? 'Less Details' : 'More Details')
+                ]),
+                isExpanded && React.createElement('div', {
+                    key: 'details',
+                    className: "mt-4 p-4 bg-gray-50 rounded-md"
+                }, [
+                    React.createElement('div', {
+                        key: 'info-grid',
+                        className: "grid grid-cols-1 md:grid-cols-2 gap-4"
+                    }, [
+                        React.createElement('div', { key: 'ingredients' }, [
+                            React.createElement('h4', {
+                                className: "font-semibold text-gray-700 mb-2"
+                            }, "Ingredients"),
+                            React.createElement('p', {
+                                className: "text-sm text-gray-600"
+                            }, item.ingredients)
+                        ]),
+                        React.createElement('div', { key: 'nutrition' }, [
+                            React.createElement('h4', {
+                                className: "font-semibold text-gray-700 mb-2"
+                            }, "Nutritional Information"),
+                            React.createElement('ul', {
+                                className: "text-sm text-gray-600"
+                            }, [
+                                React.createElement('li', { key: 'calories' }, `Calories: ${item.nutritionalInfo.calories}`),
+                                React.createElement('li', { key: 'fats' }, `Fats: ${item.nutritionalInfo.fats}`),
+                                React.createElement('li', { key: 'protein' }, `Protein: ${item.nutritionalInfo.protein}g`),
+                                React.createElement('li', { key: 'carbs' }, `Carbs: ${item.nutritionalInfo.carbs || '0'}g`),
+                                React.createElement('li', { key: 'salt' }, `Salt: ${item.nutritionalInfo.salt}`)
+                            ])
+                        ])
+                    ]),
+                    (item.allergens || item.additives) && React.createElement('div', {
+                        key: 'warnings',
+                        className: "mt-4"
+                    }, [
+                        item.allergens && React.createElement('p', {
+                            key: 'allergens',
+                            className: "text-sm text-red-600"
+                        }, [
+                            React.createElement('span', {
+                                key: 'allergens-label',
+                                className: "font-semibold"
+                            }, "Allergens: "),
+                            item.allergens
+                        ]),
+                        item.additives && React.createElement('p', {
+                            key: 'additives',
+                            className: "text-sm text-orange-600"
+                        }, [
+                            React.createElement('span', {
+                                key: 'additives-label',
+                                className: "font-semibold"
+                            }, "Additives: "),
+                            item.additives
+                        ])
+                    ])
+                ])
+            ]);
         };
 
         const MenuList = () => {
-            return (
-                <div className="min-h-screen bg-gray-100">
-                    <div className="container mx-auto px-4 py-8">
-                        <header className="text-center mb-12">
-                            <h1 className="text-4xl font-bold text-gray-900 mb-4">Our Menu</h1>
-                            <p className="text-gray-600">Click on "More Details" to see nutritional information and ingredients</p>
-                        </header>
-                        <div className="max-w-3xl mx-auto">
-                            {menuData.map((item, index) => (
-                                <MenuItem key={index} item={item} />
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            );
+            return React.createElement('div', {
+                className: "min-h-screen bg-gray-100"
+            }, [
+                React.createElement('div', {
+                    key: 'container',
+                    className: "container mx-auto px-4 py-8"
+                }, [
+                    React.createElement('header', {
+                        key: 'header',
+                        className: "text-center mb-12"
+                    }, [
+                        React.createElement('h1', {
+                            key: 'title',
+                            className: "text-4xl font-bold text-gray-900 mb-4"
+                        }, "Our Menu"),
+                        React.createElement('p', {
+                            key: 'subtitle',
+                            className: "text-gray-600"
+                        }, "Click on \"More Details\" to see nutritional information and ingredients")
+                    ]),
+                    React.createElement('div', {
+                        key: 'menu-list',
+                        className: "max-w-3xl mx-auto"
+                    }, menuData.map((item, index) =>
+                        React.createElement(MenuItem, {
+                            key: index,
+                            item: item
+                        })
+                    ))
+                ])
+            ]);
         };
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<MenuList />);
+        root.render(React.createElement(MenuList));
     </script>
 </body>
 </html>
